@@ -1,6 +1,6 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../components/ui/carousel"
+import { Badge } from "../components/ui/badge"
+import { Button } from "../components/ui/button"
 
 interface Movie {
   _id: string

@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { login } from "@/services/auth"
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/input"
+import { login } from "../services/auth"
 import { useToast } from "../hooks/useToast"
 
 export function LoginPage() {

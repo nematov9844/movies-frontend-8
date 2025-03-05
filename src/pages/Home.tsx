@@ -1,6 +1,6 @@
-import { Hero } from "@/components/Hero"
-import { Categories } from "@/components/Categories"
-import { MovieList } from "@/components/MovieList"
+import { Hero } from "../components/Hero"
+import { Categories } from "../components/Categories"
+import { MovieList } from "../components/MovieList"
 import { useEffect, useState } from "react"
 import { getMovies } from "../services/api"
 

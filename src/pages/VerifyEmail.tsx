@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { verifyEmail } from "@/services/auth"
+import { verifyEmail } from "../services/auth"
 
 export function VerifyEmailPage() {
   const { token } = useParams()

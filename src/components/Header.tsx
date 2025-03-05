@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "../components/ui/button"
 import { InstagramLogoIcon } from "@radix-ui/react-icons"
 import { Link } from "react-router-dom"
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "../hooks/useAuth"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "../components/ui/dropdown-menu"
 
 export function Header() {
   const { user, logout } = useAuth()
