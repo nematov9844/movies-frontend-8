@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { Button } from "../components/ui/button"
 import { buyTicket } from "../services/tickets"
 import { useAuth } from "../hooks/useAuth"
 import { useToast } from "../providers/ToastContext"
 
-interface Session {
-  _id: string
-  time: string
-  seats: {
-    number: string
-    isOccupied: boolean
-  }[]
-}
+
 
 export function SessionsPage() {
   const { movieId } = useParams()
-  const navigate = useNavigate()
-  const { user } = useAuth() // useAuth hookidan foydalanish
-  const [sessions, setSessions] = useState<Session[]>([])
+  const { user } = useAuth()
   const [selectedSeats, setSelectedSeats] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const { addToast } = useToast()

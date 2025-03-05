@@ -31,6 +31,10 @@ export function RegisterPage() {
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+  }
+
   return (
     <div className="min-h-screen bg-[#1C2127] flex items-center justify-center">
       <div className="bg-[#2A2F37] p-8 rounded-lg w-full max-w-md">
@@ -46,7 +50,7 @@ export function RegisterPage() {
               type="text"
               placeholder="Ваше имя"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleChange}
               className="bg-[#1C2127] border-gray-700"
             />
           </div>
