@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom"
 import { useToast } from "../providers/ToastContext"
 import { useAuth } from "../hooks/useAuth"
 import axios from 'axios'
-import { format, parseISO } from 'date-fns'
-import { ru } from 'date-fns/locale'
 import { Clock, MapPin, Users, Timer, CreditCard } from 'lucide-react'
 import { Button } from "../components/ui/button"
 

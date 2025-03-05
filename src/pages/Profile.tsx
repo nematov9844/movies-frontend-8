@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
+import type { AuthState } from "../hooks/useAuth";
 
 const Profile = () => {
-  const auth = useAuth();
+  const auth = useAuth() as unknown as AuthState;
   const user = auth?.user?.user;
   const [isEditing, setIsEditing] = useState(false);
   const token = localStorage.getItem('token');
@@ -36,7 +37,7 @@ const Profile = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      auth.setUser({ ...auth.user, user: res.data.user });
+      auth.setUser({ user: res.data.user });
       setIsEditing(false);
     } catch (error: any) {
       console.error("Profilni yangilashda xatolik:", error.response?.data || error.message);

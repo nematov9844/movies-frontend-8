@@ -44,9 +44,9 @@ export function MovieList({ movies }: MovieListProps) {
       }
       await addToWishlist(movieId, user.user._id)
       addToast("Film sevimlilarga qo'shildi", "success")
-    } catch (error) {
-      
-      addToast(`${error.response.data.message}`, "info")
+    } catch (error: any) {
+      console.error("Filmlarni yuklashda xatolik:", error)
+      addToast(error?.response?.data?.message || "Filmlarni yuklashda xatolik", "error")
     }
   }
 

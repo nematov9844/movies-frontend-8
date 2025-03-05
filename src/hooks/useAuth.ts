@@ -2,44 +2,30 @@ import { create } from 'zustand'
 import { getMe } from '../services/auth'
 import { User } from '../types/user'
 
-interface AuthState {
-  user: User | null
-  loading: boolean
-  error: string | null
-  login: (token: string) => Promise<void>
-  logout: () => void
+export interface AuthState {
+  user: {
+    user: User
+  } | null
+  setUser: (user: { user: User } | null) => void
   checkAuth: () => Promise<void>
+  logout: () => void
 }
 
 export const useAuth = create<AuthState>((set) => ({
   user: null,
-  loading: false,
-  error: null,
-
-  login: async (token: string) => {
+  setUser: (user) => set({ user }),
+  checkAuth: async () => {
     try {
-      localStorage.setItem('token', token)
       const user = await getMe()
-      set({ user, error: null })
+      set({ user })
     } catch (error) {
-      set({ error: 'Ошибка авторизации' })
+      set({ user: null })
     }
   },
-
   logout: () => {
     localStorage.removeItem('token')
     set({ user: null })
-  },
+  }
+}))
 
-  checkAuth: async () => {
-    try {
-      set({ loading: true })
-      const user = await getMe()
-      set({ user, error: null })
-    } catch (error) {
-      set({ error: 'Ошибка авторизации' })
-    } finally {
-      set({ loading: false })
-    }
-  },
-})) 
+export type { User } 
