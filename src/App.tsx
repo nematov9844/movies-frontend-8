@@ -11,6 +11,8 @@ import { ToastProvider } from "./providers/ToastContext"
 import { Footer } from "./components/Footer"
 import { Header } from "./components/Header"
 import Profile from "./pages/Profile"
+import { SessionDetails } from "./pages/SessionDetails"
+import { PaymentSuccess } from "./pages/PaymentSuccess"
 
 function App() {
   const { checkAuth } = useAuth()
@@ -32,8 +34,10 @@ function App() {
               <Route path="/verify-email" element={<VerifyEmailPage />} />
               <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
               <Route path="/wishlist" element={<WishlistPage />} />
-              <Route path="/sessions/:movieId" element={<SessionsPage />} />
+              <Route path="/sessions/:sessionId" element={<SessionDetails />} />
+              <Route path="/sessions" element={<SessionsPage />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
             </Routes>
           </main>
           <Footer />

@@ -1,0 +1,663 @@
+[
+    {
+        "title": "Inception",
+        "sessions": [
+            {
+                "date": "2025-03-17",
+                "time": "13:00",
+                "hall": "Hall 4",
+                "available_seats": 187
+            },
+            {
+                "date": "2025-03-16",
+                "time": "13:15",
+                "hall": "Hall 1",
+                "available_seats": 100
+            },
+            {
+                "date": "2025-03-18",
+                "time": "10:00",
+                "hall": "Hall 5",
+                "available_seats": 192
+            },
+            {
+                "date": "2025-03-20",
+                "time": "10:15",
+                "hall": "Hall 3",
+                "available_seats": 159
+            }
+        ]
+    },
+    {
+        "title": "The Dark Knight",
+        "sessions": [
+            {
+                "date": "2025-03-18",
+                "time": "13:45",
+                "hall": "Hall 1",
+                "available_seats": 192
+            },
+            {
+                "date": "2025-03-15",
+                "time": "10:45",
+                "hall": "Hall 3",
+                "available_seats": 50
+            },
+            {
+                "date": "2025-03-15",
+                "time": "16:15",
+                "hall": "Hall 4",
+                "available_seats": 198
+            }
+        ]
+    },
+    {
+        "title": "Interstellar",
+        "sessions": [
+            {
+                "date": "2025-03-17",
+                "time": "13:15",
+                "hall": "Hall 4",
+                "available_seats": 133
+            },
+            {
+                "date": "2025-03-16",
+                "time": "19:00",
+                "hall": "Hall 5",
+                "available_seats": 111
+            },
+            {
+                "date": "2025-03-20",
+                "time": "10:00",
+                "hall": "Hall 5",
+                "available_seats": 85
+            }
+        ]
+    },
+    {
+        "title": "Avatar",
+        "sessions": [
+            {
+                "date": "2025-03-15",
+                "time": "13:15",
+                "hall": "Hall 5",
+                "available_seats": 187
+            },
+            {
+                "date": "2025-03-20",
+                "time": "13:45",
+                "hall": "Hall 1",
+                "available_seats": 109
+            },
+            {
+                "date": "2025-03-18",
+                "time": "16:30",
+                "hall": "Hall 3",
+                "available_seats": 54
+            },
+            {
+                "date": "2025-03-17",
+                "time": "21:30",
+                "hall": "Hall 2",
+                "available_seats": 66
+            },
+            {
+                "date": "2025-03-18",
+                "time": "21:30",
+                "hall": "Hall 5",
+                "available_seats": 194
+            }
+        ]
+    },
+    {
+        "title": "Titanic",
+        "sessions": [
+            {
+                "date": "2025-03-20",
+                "time": "19:00",
+                "hall": "Hall 3",
+                "available_seats": 120
+            },
+            {
+                "date": "2025-03-18",
+                "time": "21:15",
+                "hall": "Hall 5",
+                "available_seats": 164
+            },
+            {
+                "date": "2025-03-16",
+                "time": "21:45",
+                "hall": "Hall 1",
+                "available_seats": 163
+            },
+            {
+                "date": "2025-03-19",
+                "time": "10:45",
+                "hall": "Hall 5",
+                "available_seats": 80
+            }
+        ]
+    },
+    {
+        "title": "The Matrix",
+        "sessions": [
+            {
+                "date": "2025-03-19",
+                "time": "23:15",
+                "hall": "Hall 1",
+                "available_seats": 179
+            },
+            {
+                "date": "2025-03-19",
+                "time": "16:15",
+                "hall": "Hall 2",
+                "available_seats": 128
+            },
+            {
+                "date": "2025-03-15",
+                "time": "21:00",
+                "hall": "Hall 3",
+                "available_seats": 178
+            }
+        ]
+    },
+    {
+        "title": "Pulp Fiction",
+        "sessions": [
+            {
+                "date": "2025-03-20",
+                "time": "23:00",
+                "hall": "Hall 1",
+                "available_seats": 166
+            },
+            {
+                "date": "2025-03-16",
+                "time": "19:15",
+                "hall": "Hall 1",
+                "available_seats": 199
+            },
+            {
+                "date": "2025-03-20",
+                "time": "10:15",
+                "hall": "Hall 4",
+                "available_seats": 177
+            }
+        ]
+    },
+    {
+        "title": "Forrest Gump",
+        "sessions": [
+            {
+                "date": "2025-03-15",
+                "time": "16:15",
+                "hall": "Hall 3",
+                "available_seats": 146
+            },
+            {
+                "date": "2025-03-16",
+                "time": "13:15",
+                "hall": "Hall 3",
+                "available_seats": 180
+            },
+            {
+                "date": "2025-03-19",
+                "time": "16:15",
+                "hall": "Hall 1",
+                "available_seats": 175
+            },
+            {
+                "date": "2025-03-20",
+                "time": "19:00",
+                "hall": "Hall 3",
+                "available_seats": 118
+            }
+        ]
+    },
+    {
+        "title": "The Lion King",
+        "sessions": [
+            {
+                "date": "2025-03-18",
+                "time": "13:45",
+                "hall": "Hall 3",
+                "available_seats": 139
+            },
+            {
+                "date": "2025-03-15",
+                "time": "13:30",
+                "hall": "Hall 1",
+                "available_seats": 183
+            },
+            {
+                "date": "2025-03-17",
+                "time": "13:00",
+                "hall": "Hall 4",
+                "available_seats": 59
+            },
+            {
+                "date": "2025-03-17",
+                "time": "19:45",
+                "hall": "Hall 4",
+                "available_seats": 59
+            }
+        ]
+    },
+    {
+        "title": "Gladiator",
+        "sessions": [
+            {
+                "date": "2025-03-16",
+                "time": "10:00",
+                "hall": "Hall 1",
+                "available_seats": 156
+            },
+            {
+                "date": "2025-03-18",
+                "time": "13:30",
+                "hall": "Hall 3",
+                "available_seats": 166
+            },
+            {
+                "date": "2025-03-15",
+                "time": "19:45",
+                "hall": "Hall 4",
+                "available_seats": 149
+            },
+            {
+                "date": "2025-03-20",
+                "time": "23:15",
+                "hall": "Hall 1",
+                "available_seats": 124
+            },
+            {
+                "date": "2025-03-19",
+                "time": "13:45",
+                "hall": "Hall 1",
+                "available_seats": 119
+            }
+        ]
+    },
+    {
+        "title": "The Godfather",
+        "sessions": [
+            {
+                "date": "2025-03-18",
+                "time": "21:15",
+                "hall": "Hall 2",
+                "available_seats": 199
+            },
+            {
+                "date": "2025-03-15",
+                "time": "19:15",
+                "hall": "Hall 3",
+                "available_seats": 168
+            },
+            {
+                "date": "2025-03-16",
+                "time": "13:00",
+                "hall": "Hall 1",
+                "available_seats": 83
+            }
+        ]
+    },
+    {
+        "title": "The Shawshank Redemption",
+        "sessions": [
+            {
+                "date": "2025-03-15",
+                "time": "21:15",
+                "hall": "Hall 4",
+                "available_seats": 180
+            },
+            {
+                "date": "2025-03-15",
+                "time": "19:30",
+                "hall": "Hall 5",
+                "available_seats": 146
+            },
+            {
+                "date": "2025-03-18",
+                "time": "13:30",
+                "hall": "Hall 2",
+                "available_seats": 67
+            }
+        ]
+    },
+    {
+        "title": "Fight Club",
+        "sessions": [
+            {
+                "date": "2025-03-17",
+                "time": "16:15",
+                "hall": "Hall 1",
+                "available_seats": 200
+            },
+            {
+                "date": "2025-03-17",
+                "time": "23:30",
+                "hall": "Hall 4",
+                "available_seats": 93
+            },
+            {
+                "date": "2025-03-16",
+                "time": "10:00",
+                "hall": "Hall 3",
+                "available_seats": 133
+            },
+            {
+                "date": "2025-03-15",
+                "time": "16:30",
+                "hall": "Hall 3",
+                "available_seats": 56
+            }
+        ]
+    },
+    {
+        "title": "The Avengers",
+        "sessions": [
+            {
+                "date": "2025-03-15",
+                "time": "19:45",
+                "hall": "Hall 3",
+                "available_seats": 107
+            },
+            {
+                "date": "2025-03-17",
+                "time": "19:45",
+                "hall": "Hall 1",
+                "available_seats": 178
+            },
+            {
+                "date": "2025-03-15",
+                "time": "16:45",
+                "hall": "Hall 5",
+                "available_seats": 192
+            },
+            {
+                "date": "2025-03-18",
+                "time": "16:45",
+                "hall": "Hall 1",
+                "available_seats": 131
+            },
+            {
+                "date": "2025-03-18",
+                "time": "21:45",
+                "hall": "Hall 5",
+                "available_seats": 51
+            }
+        ]
+    },
+    {
+        "title": "Joker",
+        "sessions": [
+            {
+                "date": "2025-03-20",
+                "time": "23:30",
+                "hall": "Hall 4",
+                "available_seats": 81
+            },
+            {
+                "date": "2025-03-15",
+                "time": "10:00",
+                "hall": "Hall 5",
+                "available_seats": 161
+            },
+            {
+                "date": "2025-03-16",
+                "time": "10:00",
+                "hall": "Hall 5",
+                "available_seats": 160
+            },
+            {
+                "date": "2025-03-16",
+                "time": "19:30",
+                "hall": "Hall 3",
+                "available_seats": 127
+            }
+        ]
+    },
+    {
+        "title": "Spider-Man: No Way Home",
+        "sessions": [
+            {
+                "date": "2025-03-16",
+                "time": "10:30",
+                "hall": "Hall 5",
+                "available_seats": 112
+            },
+            {
+                "date": "2025-03-18",
+                "time": "13:45",
+                "hall": "Hall 1",
+                "available_seats": 103
+            },
+            {
+                "date": "2025-03-20",
+                "time": "19:15",
+                "hall": "Hall 2",
+                "available_seats": 81
+            },
+            {
+                "date": "2025-03-17",
+                "time": "23:00",
+                "hall": "Hall 3",
+                "available_seats": 187
+            }
+        ]
+    },
+    {
+        "title": "Doctor Strange",
+        "sessions": [
+            {
+                "date": "2025-03-20",
+                "time": "10:15",
+                "hall": "Hall 3",
+                "available_seats": 136
+            },
+            {
+                "date": "2025-03-20",
+                "time": "16:15",
+                "hall": "Hall 1",
+                "available_seats": 128
+            },
+            {
+                "date": "2025-03-18",
+                "time": "21:15",
+                "hall": "Hall 2",
+                "available_seats": 191
+            },
+            {
+                "date": "2025-03-19",
+                "time": "23:45",
+                "hall": "Hall 3",
+                "available_seats": 126
+            },
+            {
+                "date": "2025-03-18",
+                "time": "23:45",
+                "hall": "Hall 5",
+                "available_seats": 106
+            }
+        ]
+    },
+    {
+        "title": "Black Panther",
+        "sessions": [
+            {
+                "date": "2025-03-20",
+                "time": "21:15",
+                "hall": "Hall 5",
+                "available_seats": 72
+            },
+            {
+                "date": "2025-03-17",
+                "time": "23:30",
+                "hall": "Hall 1",
+                "available_seats": 69
+            },
+            {
+                "date": "2025-03-16",
+                "time": "21:00",
+                "hall": "Hall 1",
+                "available_seats": 195
+            }
+        ]
+    },
+    {
+        "title": "The Batman",
+        "sessions": [
+            {
+                "date": "2025-03-18",
+                "time": "10:00",
+                "hall": "Hall 2",
+                "available_seats": 161
+            },
+            {
+                "date": "2025-03-15",
+                "time": "21:15",
+                "hall": "Hall 3",
+                "available_seats": 122
+            },
+            {
+                "date": "2025-03-17",
+                "time": "23:45",
+                "hall": "Hall 5",
+                "available_seats": 176
+            },
+            {
+                "date": "2025-03-19",
+                "time": "19:00",
+                "hall": "Hall 1",
+                "available_seats": 73
+            },
+            {
+                "date": "2025-03-19",
+                "time": "16:30",
+                "hall": "Hall 3",
+                "available_seats": 50
+            }
+        ]
+    },
+    {
+        "title": "Dune",
+        "sessions": [
+            {
+                "date": "2025-03-16",
+                "time": "19:00",
+                "hall": "Hall 2",
+                "available_seats": 50
+            },
+            {
+                "date": "2025-03-16",
+                "time": "16:15",
+                "hall": "Hall 3",
+                "available_seats": 129
+            },
+            {
+                "date": "2025-03-18",
+                "time": "21:30",
+                "hall": "Hall 3",
+                "available_seats": 72
+            }
+        ]
+    },
+    {
+        "title": "The Lord of the Rings",
+        "sessions": [
+            {
+                "date": "2025-03-20",
+                "time": "19:00",
+                "hall": "Hall 3",
+                "available_seats": 105
+            },
+            {
+                "date": "2025-03-16",
+                "time": "13:00",
+                "hall": "Hall 5",
+                "available_seats": 107
+            },
+            {
+                "date": "2025-03-16",
+                "time": "19:00",
+                "hall": "Hall 5",
+                "available_seats": 64
+            },
+            {
+                "date": "2025-03-18",
+                "time": "13:00",
+                "hall": "Hall 3",
+                "available_seats": 162
+            },
+            {
+                "date": "2025-03-17",
+                "time": "21:30",
+                "hall": "Hall 3",
+                "available_seats": 87
+            }
+        ]
+    },
+    {
+        "title": "Harry Potter",
+        "sessions": [
+            {
+                "date": "2025-03-16",
+                "time": "16:45",
+                "hall": "Hall 5",
+                "available_seats": 58
+            },
+            {
+                "date": "2025-03-17",
+                "time": "21:30",
+                "hall": "Hall 4",
+                "available_seats": 168
+            },
+            {
+                "date": "2025-03-16",
+                "time": "13:45",
+                "hall": "Hall 5",
+                "available_seats": 146
+            },
+            {
+                "date": "2025-03-18",
+                "time": "23:45",
+                "hall": "Hall 1",
+                "available_seats": 106
+            }
+        ]
+    },
+    {
+        "title": "Star Wars",
+        "sessions": [
+            {
+                "date": "2025-03-16",
+                "time": "13:15",
+                "hall": "Hall 3",
+                "available_seats": 97
+            },
+            {
+                "date": "2025-03-16",
+                "time": "10:00",
+                "hall": "Hall 1",
+                "available_seats": 112
+            },
+            {
+                "date": "2025-03-16",
+                "time": "21:15",
+                "hall": "Hall 5",
+                "available_seats": 190
+            },
+            {
+                "date": "2025-03-16",
+                "time": "21:30",
+                "hall": "Hall 2",
+                "available_seats": 146
+            },
+            {
+                "date": "2025-03-16",
+                "time": "19:00",
+                "hall": "Hall 4",
+                "available_seats": 52
+            }
+        ]
+    }
+]

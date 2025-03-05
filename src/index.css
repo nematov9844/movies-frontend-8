@@ -177,3 +177,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Skrollning umumiy qismi */
+::-webkit-scrollbar {
+  width: 8px; /* Vertikal skroll uchun */
+  height: 8px; /* Gorizontal skroll uchun */
+}
+
+/* Skrollning fon qismi */
+::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Track foni (dark mode uchun qora) */
+  border-radius: 4px;
+}
+
+/* Skrollning harakatlanuvchi qismi (thumb) */
+::-webkit-scrollbar-thumb {
+  background: #4a4a4a; /* Skrollning rangi */
+  border-radius: 4px;
+}
+
+/* Skroll ustiga kelganda */
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Skrollning chekka (bosh va oxirgi) tugmalari */
+::-webkit-scrollbar-button {
+  display: none; /* Agar tugmalar chiqishini xohlamasangiz */
+}

@@ -45,7 +45,8 @@ export function MovieList({ movies }: MovieListProps) {
       await addToWishlist(movieId, user.user._id)
       addToast("Film sevimlilarga qo'shildi", "success")
     } catch (error) {
-      addToast("Filmni qo'shishda xatolik yuz berdi", "error")
+      
+      addToast(`${error.response.data.message}`, "info")
     }
   }
 
