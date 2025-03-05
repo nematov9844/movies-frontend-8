@@ -1,5 +1,4 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
-import { Header } from "./components/Header"
 import { HomePage } from "./pages/Home"
 import { LoginPage } from "./pages/Login"
 import { RegisterPage } from "./pages/Register"
@@ -10,6 +9,8 @@ import { useAuth } from "./hooks/useAuth"
 import { useEffect } from "react"
 import { ToastProvider } from "./providers/ToastContext"
 import { Footer } from "./components/Footer"
+import { Header } from "./components/Header"
+import Profile from "./pages/Profile"
 
 function App() {
   const { checkAuth } = useAuth()
@@ -32,6 +33,7 @@ function App() {
               <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
               <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/sessions/:movieId" element={<SessionsPage />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </main>
           <Footer />

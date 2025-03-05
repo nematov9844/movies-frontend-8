@@ -1,15 +1,15 @@
-import { Button } from "../components/ui/button"
+import { Link } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 import { InstagramLogoIcon } from "@radix-ui/react-icons"
-import { Link } from "react-router-dom"
-import { useAuth } from "../hooks/useAuth"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu"
+} from '../components/ui/dropdown-menu'
+import { Button } from '../components/ui/button'
 
-export function Header() {
+const Header = () => {
   const { user, logout } = useAuth()
 
   return (
@@ -45,7 +45,7 @@ export function Header() {
               </a>
             </div>
 
-            {/* Social and Button */}
+            {/* Social and Auth */}
             <div className="flex items-center gap-4">
               <a 
                 href="https://instagram.com/magiccinema" 
@@ -95,4 +95,6 @@ export function Header() {
       </div>
     </header>
   )
-} 
+}
+
+export { Header }

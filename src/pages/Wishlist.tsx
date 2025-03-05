@@ -88,7 +88,7 @@ export function WishlistPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {movies.map((movie) => (
-            <Card key={movie._id} className="bg-[#2A2F37] border-none text-white">
+            <Card key={movie._id} className="bg-[#2A2F37] pb-4 pt-0 overflow-hidden border-none text-white">
               <div className="aspect-[2/3] relative overflow-hidden">
                 <img
                   src={movie.image}
