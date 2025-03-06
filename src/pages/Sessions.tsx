@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useToast } from "../providers/ToastContext"
-import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 import { ru } from 'date-fns/locale'
 import { Clock, MapPin, Users, Timer, CreditCard } from 'lucide-react'
@@ -22,7 +21,7 @@ interface Movie {
 
 interface MovieSession {
   _id: string
-  movie: string // movie ID
+  movie: string
   hall: string
   date: string
   time: string
@@ -30,10 +29,6 @@ interface MovieSession {
   availableSeats: number
   totalSeats: number
 }
-
-
-
-
 
 interface BuyTicketRequest {
   userId: string

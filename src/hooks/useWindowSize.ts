@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useWindowSize = (ref: React.RefObject<HTMLDivElement>) => {
+function useWindowSize(ref: React.RefObject<HTMLDivElement | null>) {
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -29,6 +29,6 @@ const useWindowSize = (ref: React.RefObject<HTMLDivElement>) => {
   }, [ref]);
 
   return { width, height };
-};
+}
 
 export default useWindowSize;

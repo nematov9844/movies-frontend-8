@@ -19,7 +19,7 @@ const navItems = [
 ]
 
 export function Categories() {
-  const divRef: any = useRef(null);
+  const divRef = useRef<HTMLDivElement>(null);
 
   const { width, height } = useWindowSize(divRef);
 
