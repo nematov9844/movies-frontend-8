@@ -16,6 +16,8 @@ interface Movie {
   description: string
   releaseDate: string
   sessions: MovieSession[]
+  rating: number
+  image: string
 }
 
 interface MovieSession {
@@ -29,27 +31,9 @@ interface MovieSession {
   totalSeats: number
 }
 
-interface AvailableSeat {
-  isBooked: boolean
-  _id: string
-  id: string
-}
 
-interface Session {
-  _id: string
-  id: string
-  movie: Movie
-  hall: string
-  date: string
-  time: string
-  price: number
-  availableSeats: {
-    isBooked: boolean
-    _id: string
-    id: string
-  }[]
-  totalSeats: number
-}
+
+
 
 interface BuyTicketRequest {
   userId: string

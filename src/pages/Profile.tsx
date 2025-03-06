@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
-import axios from "axios";
 import { useToast } from "../hooks/useToast";
 import { Badge } from "../components/ui/badge";
 

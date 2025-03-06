@@ -21,7 +21,7 @@ export function LoginPage() {
     setError("")
 
     try {
-      const response = await login(email, password)
+      const response: any = await login(email, password)
       setUser(response)
       await checkAuth()
       navigate("/")
