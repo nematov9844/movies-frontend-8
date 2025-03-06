@@ -1,5 +1,7 @@
 import { Button } from "../components/ui/button"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
+import useWindowSize from "../hooks/useWindowSize";
+import { useRef } from "react";
 
 const categories = [
   { id: 1, name: "Сегодня" },
@@ -17,7 +19,9 @@ const navItems = [
 ]
 
 export function Categories() {
-  const navigate = useNavigate()
+  const divRef = useRef(null);
+
+  const { width, height } = useWindowSize(divRef);
 
   return (
     <div className="bg-[#1C2127] border-b border-gray-800">
@@ -25,7 +29,7 @@ export function Categories() {
         {/* Top Navigation */}
         <div className="flex items-center justify-between py-4 border-b border-gray-800">
           <nav>
-            <ul className="flex items-center gap-6">
+            <ul className="flex items-center gap-6 flex-wrap">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <Link
@@ -39,13 +43,6 @@ export function Categories() {
             </ul>
           </nav>
           <div className="flex items-center gap-3">
-            <Button 
-              variant="ghost" 
-              className="text-gray-400 hover:text-white"
-              onClick={() => navigate('/login')}
-            >
-              Войти
-            </Button>
             <Button className="bg-emerald-500 hover:bg-emerald-600">
               Написать отзыв
             </Button>
@@ -53,8 +50,8 @@ export function Categories() {
         </div>
 
         {/* Date Categories */}
-        <div className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between py-4 flex-wrap">
+          <div className="flex items-center gap-2 overflow-x-auto">
             {categories.map((category) => (
               <Button
                 key={category.id}
@@ -62,20 +59,20 @@ export function Categories() {
                 className={
                   category.id === 1
                     ? "bg-emerald-500 hover:bg-emerald-600"
-                    : "text-gray-400 hover:text-white"
+                    : "text-gray-400 hover:text-white hover:bg-emerald-500"
                 }
               >
                 {category.name}
               </Button>
             ))}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mt-2 sm:mt-0">
             <Button variant="outline" className="border-emerald-500 text-emerald-500">
-              1240 × 48
+              {width} × {height}
             </Button>
           </div>
         </div>
       </div>
     </div>
-  )
-} 
+  );
+}

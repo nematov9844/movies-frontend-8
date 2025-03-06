@@ -24,7 +24,7 @@ export function Hero({ movies }: HeroProps) {
                 <img
                   src={movie.image}
                   alt={movie.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">

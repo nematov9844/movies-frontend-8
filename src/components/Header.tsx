@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
@@ -15,11 +15,13 @@ import {data} from '../data';
 const ids = data.map((item) => item._id);
 console.log(ids);
 
-
-
-const Header = () => {
-  const { user, logout } = useAuth();
+export const Header = () => {
+  const { user, checkAuth, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <header className="bg-[#1C2127] border-b border-gray-800">
@@ -109,5 +111,3 @@ const Header = () => {
     </header>
   );
 };
-
-export { Header };

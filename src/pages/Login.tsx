@@ -4,6 +4,7 @@ import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { login } from "../services/auth"
 import { useToast } from "../hooks/useToast"
+import { useAuth } from "../hooks/useAuth"
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ export function LoginPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const { addToast } = useToast()
+  const { setUser, checkAuth } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -19,7 +21,9 @@ export function LoginPage() {
     setError("")
 
     try {
-      await login(email, password)
+      const response = await login(email, password)
+      setUser(response)
+      await checkAuth()
       navigate("/")
       addToast("Muvaffaqiyatli kirildi", "success")
     } catch (err: any) {

@@ -59,6 +59,10 @@
   @apply max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8;
 }
 
+@theme {
+  --breakpoint-nr: 300px;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -186,19 +190,21 @@
 
 /* Skrollning fon qismi */
 ::-webkit-scrollbar-track {
-  background: #1a1a1a; /* Track foni (dark mode uchun qora) */
+  background: #384e42; /* Track foni (dark mode uchun qora) */
   border-radius: 4px;
 }
 
 /* Skrollning harakatlanuvchi qismi (thumb) */
 ::-webkit-scrollbar-thumb {
-  background: #4a4a4a; /* Skrollning rangi */
+  background: oklch(0.696 0.17 162.48); /* Skrollning rangi */
   border-radius: 4px;
+  height: 400px; /* Thumbning balandligini o'zgartirish */
+  width: 100px; /* Thumbning kengligini o'zgartirish */
 }
 
 /* Skroll ustiga kelganda */
 ::-webkit-scrollbar-thumb:hover {
-  background: #777;
+  background: oklch(0.696 0.17 162.48);
 }
 
 /* Skrollning chekka (bosh va oxirgi) tugmalari */

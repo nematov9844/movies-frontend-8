@@ -11,21 +11,43 @@ import { useAuth } from "../hooks/useAuth"
 interface Movie {
   _id: string
   title: string
-  description: string
-  genre: string[]
   duration: number
-  image: string
-  rating: number
+  genre: string[]
+  description: string
+  releaseDate: string
+  sessions: MovieSession[]
 }
 
-interface Session {
+interface MovieSession {
   _id: string
-  movie: Movie
+  movie: string // movie ID
   hall: string
   date: string
   time: string
   price: number
   availableSeats: number
+  totalSeats: number
+}
+
+interface AvailableSeat {
+  isBooked: boolean
+  _id: string
+  id: string
+}
+
+interface Session {
+  _id: string
+  id: string
+  movie: Movie
+  hall: string
+  date: string
+  time: string
+  price: number
+  availableSeats: {
+    isBooked: boolean
+    _id: string
+    id: string
+  }[]
   totalSeats: number
 }
 
@@ -36,7 +58,7 @@ interface BuyTicketRequest {
 }
 
 export const SessionsPage = () => {
-  const [sessions, setSessions] = useState<Session[]>([])
+  const [movies, setMovies] = useState<Movie[]>([])
   const [selectedDate, setSelectedDate] = useState<string>("")
   const [uniqueDates, setUniqueDates] = useState<string[]>([])
   const { addToast } = useToast()
@@ -48,18 +70,27 @@ export const SessionsPage = () => {
       try {
         setLoading(true)
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/sessions`)
-        const allSessions = response.data
+        const allMovies = response.data.data || []
         
+        if (allMovies.length === 0) {
+          setUniqueDates([])
+          setMovies([])
+          setLoading(false)
+          return
+        }
+
         // Barcha sanalarni yig'ib olish
         const dates = Array.from(new Set(
-          allSessions.map((session: Session) => 
-            format(parseISO(session.date), 'yyyy-MM-dd')
+          allMovies.flatMap((movie: Movie) => 
+            movie.sessions.map((session: MovieSession) => 
+              format(parseISO(session.date), 'yyyy-MM-dd')
+            )
           )
-        )) as string[];
+        )).sort() as string[]
         
         setUniqueDates(dates)
         setSelectedDate(dates[0])
-        setSessions(allSessions)
+        setMovies(allMovies)
       } catch (error) {
         console.error("Seanslarni yuklashda xatolik:", error)
         addToast("Seanslarni yuklashda xatolik yuz berdi", "error")
@@ -81,24 +112,14 @@ export const SessionsPage = () => {
     }
   }
 
-  const filteredSessions = sessions.filter(session =>
-    format(parseISO(session.date), 'yyyy-MM-dd') === selectedDate
+  // Tanlangan sanaga mos filmlarni filtrlash
+  const filteredMovies = movies.filter(movie => 
+    movie.sessions.some(session => 
+      format(parseISO(session.date), 'yyyy-MM-dd') === selectedDate
+    )
   )
 
-  // Filmlar bo'yicha guruhlaymiz
-  const groupedSessions = filteredSessions.reduce((acc, session) => {
-    const movieId = session.movie._id
-    if (!acc[movieId]) {
-      acc[movieId] = {
-        movie: session.movie,
-        sessions: []
-      }
-    }
-    acc[movieId].sessions.push(session)
-    return acc
-  }, {} as Record<string, { movie: Movie, sessions: Session[] }>)
-
-  const handleBuyTicket = async (e: React.MouseEvent, session: Session) => {
+  const handleBuyTicket = async (e: React.MouseEvent, session: MovieSession) => {
     e.preventDefault() // Link ichida bo'lgani uchun
     
     if (!user) {
@@ -109,7 +130,7 @@ export const SessionsPage = () => {
     try {
       const ticketData: BuyTicketRequest = {
         userId: user.user._id,
-        movieId: session.movie._id,
+        movieId: session._id,
         seatNumber: "A1"
       }
 
@@ -142,6 +163,19 @@ export const SessionsPage = () => {
     )
   }
 
+  if (movies.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#141414]">
+        <div className="container mx-auto py-8 px-4">
+          <h1 className="text-3xl font-bold text-white mb-6">Расписание сеансов</h1>
+          <div className="text-center text-gray-400 py-12">
+            На данный момент нет доступных сеансов
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[#141414]">
       <div className="container mx-auto py-8 px-4">
@@ -149,7 +183,7 @@ export const SessionsPage = () => {
 
         {/* Календарь */}
         <div className="flex gap-4 overflow-x-auto pb-4 mb-8 scrollbar-hide">
-          {uniqueDates.map(date => (
+          { uniqueDates.map(date => (
             <button
               key={date}
               onClick={() => setSelectedDate(date)}
@@ -166,17 +200,16 @@ export const SessionsPage = () => {
 
         {/* Фильмы и сеансы */}
         <div className="grid grid-cols-1 gap-8">
-          {Object.values(groupedSessions).map(({ movie, sessions }) => (
+          {filteredMovies.map((movie) => (
             <div key={movie._id} className="bg-[#1C2127] rounded-xl shadow-xl overflow-hidden border border-gray-800">
               <div className="p-6">
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Постер */}
                   <div className="w-full md:w-48 h-72 flex-shrink-0">
-                    <img 
-                      src={movie.image} 
-                      alt={movie.title}
-                      className="w-full h-full object-cover rounded-lg shadow-lg"
-                    />
+                    <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center">
+                      {/* <span className="text-gray-500">No image</span> */}
+                      <img src={movie.image} alt={movie.title} />
+                    </div>
                   </div>
 
                   <div className="flex-1">
@@ -188,9 +221,9 @@ export const SessionsPage = () => {
                           <span>{movie.duration} мин</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          {movie.genre.map((g, i) => (
-                            <span key={i} className="px-2 py-1 rounded-md bg-[#2A2F37] text-xs">
-                              {g}
+                          {movie.genre.map((genre, index) => (
+                            <span key={index} className="px-2 py-1 rounded-md bg-[#2A2F37] text-xs">
+                              {genre}
                             </span>
                           ))}
                         </div>
@@ -199,11 +232,12 @@ export const SessionsPage = () => {
                     
                     {/* Сеансы */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                      {sessions
+                      {movie.sessions
+                        .filter(session => format(parseISO(session.date), 'yyyy-MM-dd') === selectedDate)
                         .sort((a, b) => a.time.localeCompare(b.time))
                         .map((session) => (
                           <Link 
-                            to={`/sessions/${session._id}`}
+                            to={`/sessions/${movie._id}`}
                             key={session._id}
                             className="group bg-[#2A2F37] p-4 rounded-lg border border-gray-700 hover:border-emerald-500 transition-all hover:shadow-lg hover:shadow-emerald-500/10"
                           >
@@ -221,7 +255,9 @@ export const SessionsPage = () => {
                             
                             <div className="flex items-center gap-2 mb-2 text-gray-400">
                               <Users className="w-4 h-4" />
-                              <span>{session.availableSeats} из {session.totalSeats}</span>
+                              <span>
+                                {session.availableSeats} из {session.totalSeats}
+                              </span>
                             </div>
 
                             <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-700">

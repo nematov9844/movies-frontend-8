@@ -12,19 +12,29 @@ interface Movie {
   description: string
   genre: string[]
   duration: number
-  image: string
+  releaseDate: string
+  ticketPrice: number
+  director: string
+  cast: string[]
   rating: number
+  image: string
+  trailer: string
 }
 
-interface Session {
+interface MovieSession {
   _id: string
-  movie: Movie
+  movie: string // movie ID
   hall: string
   date: string
   time: string
   price: number
   availableSeats: number
   totalSeats: number
+}
+
+interface SessionResponse {
+  movie: Movie
+  sessions: MovieSession[]
 }
 
 interface BuyTicketRequest {
@@ -35,17 +45,31 @@ interface BuyTicketRequest {
 
 export const SessionDetails = () => {
   const { sessionId } = useParams()
-  const [session, setSession] = useState<Session | null>(null)
+  const [sessionData, setSessionData] = useState<SessionResponse | null>(null)
+  const [currentSession, setCurrentSession] = useState<MovieSession | null>(null)
   const { addToast } = useToast()
   const [loading, setLoading] = useState(true)
   const { user } = useAuth()
+  console.log(user);
+  
 
   useEffect(() => {
     const fetchSession = async () => {
       try {
         setLoading(true)
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/sessions/${sessionId}`)
-        setSession(response.data)
+        
+        if (!response.data?.data) {
+          addToast("Сеанс не найден", "error")
+          return
+        }
+        
+        const data = response.data.data
+        setSessionData(data)
+
+        const session = data.sessions.find((s: MovieSession) => s.movie === sessionId)
+        setCurrentSession(session || null)
+
       } catch (error) {
         console.error("Ошибка при загрузке сеанса:", error)
         addToast("Ошибка при загрузке сеанса", "error")
@@ -65,7 +89,7 @@ export const SessionDetails = () => {
       return
     }
 
-    if (!session) {
+    if (!sessionData || !currentSession) {
       addToast("Ошибка: информация о сеансе недоступна", "error")
       return
     }
@@ -73,13 +97,16 @@ export const SessionDetails = () => {
     try {
       const ticketData: BuyTicketRequest = {
         userId: user.user._id,
-        movieId: session.movie._id,
+        movieId: sessionData.movie._id,
         seatNumber: "A1"
       }
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/tickets/buy`, 
-        ticketData
+        `${import.meta.env.VITE_API_URL}/tickets/buy`,
+        ticketData,
+        {
+          headers: { Authorization: `Bearer ${user.token}` }
+        }
       )
       
       if (response.data?.url) {
@@ -97,22 +124,14 @@ export const SessionDetails = () => {
   }
 
   if (loading) {
-    return (
-      <div className="container mx-auto py-8 px-4 bg-[#141414]">
-        <div className="flex items-center justify-center h-[60vh]">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
-        </div>
-      </div>
-    )
+    return <LoadingSpinner />
   }
 
-  if (!session) {
-    return (
-      <div className="container mx-auto py-8 px-4 bg-[#141414]">
-        <div className="text-center text-white">Сеанс не найден</div>
-      </div>
-    )
+  if (!sessionData || !currentSession) {
+    return <NotFound message="Сеанс не найден" />
   }
+
+  const { movie } = sessionData
 
   return (
     <div className="min-h-screen bg-[#141414]">
@@ -122,36 +141,42 @@ export const SessionDetails = () => {
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Постер */}
               <div className="w-full lg:w-1/3">
-                <img 
-                  src={session.movie.image} 
-                  alt={session.movie.title}
-                  className="w-full h-auto rounded-lg shadow-lg"
-                />
+                {movie.image ? (
+                  <img 
+                    src={movie.image} 
+                    alt={movie.title}
+                    className="w-full h-auto rounded-lg shadow-lg"
+                  />
+                ) : (
+                  <div className="w-full aspect-[2/3] bg-gray-800 rounded-lg flex items-center justify-center">
+                    <span className="text-gray-500">No image</span>
+                  </div>
+                )}
               </div>
 
               {/* Информация */}
               <div className="flex-1">
-                <h1 className="text-3xl font-bold text-white mb-4">{session.movie.title}</h1>
+                <h1 className="text-3xl font-bold text-white mb-4">{movie.title}</h1>
                 
                 <div className="flex flex-wrap items-center gap-4 mb-6 text-gray-400">
                   <div className="flex items-center gap-2">
                     <Timer className="w-5 h-5" />
-                    <span>{session.movie.duration} мин</span>
+                    <span>{movie.duration} мин</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-5 h-5" />
-                    <span>{session.time}</span>
+                    <span>{currentSession.time}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-5 h-5" />
-                    <span>Зал {session.hall}</span>
+                    <span>Зал {currentSession.hall}</span>
                   </div>
                 </div>
 
-                <p className="text-gray-300 mb-6">{session.movie.description}</p>
+                <p className="text-gray-300 mb-6">{movie.description}</p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {session.movie.genre.map((genre, index) => (
+                  {movie.genre.map((genre, index) => (
                     <span 
                       key={index}
                       className="px-3 py-1 bg-[#2A2F37] text-gray-300 rounded-full text-sm"
@@ -161,28 +186,63 @@ export const SessionDetails = () => {
                   ))}
                 </div>
 
+                {/* Дополнительная информация */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="text-gray-400">
+                    <span className="block text-sm mb-1">Режиссер</span>
+                    <span className="text-white">{movie.director}</span>
+                  </div>
+                  <div className="text-gray-400">
+                    <span className="block text-sm mb-1">В ролях</span>
+                    <span className="text-white">{movie.cast.join(", ")}</span>
+                  </div>
+                  <div className="text-gray-400">
+                    <span className="block text-sm mb-1">Рейтинг</span>
+                    <span className="text-emerald-500">{movie.rating}/10</span>
+                  </div>
+                  <div className="text-gray-400">
+                    <span className="block text-sm mb-1">Дата выхода</span>
+                    <span className="text-white">{new Date(movie.releaseDate).toLocaleDateString()}</span>
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-4 mb-8">
                   <div className="flex items-center gap-2">
                     <Users className="w-5 h-5 text-gray-400" />
                     <span className="text-gray-400">
-                      {session.availableSeats} из {session.totalSeats} мест свободно
+                      {currentSession.availableSeats} из {currentSession.totalSeats} мест свободно
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CreditCard className="w-5 h-5 text-emerald-500" />
                     <span className="text-emerald-500 font-semibold">
-                      {session.price.toLocaleString()} сум
+                      {currentSession.price.toLocaleString()} сум
                     </span>
                   </div>
                 </div>
 
-                <Button
-                  onClick={handleBuyTicket}
-                  className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg font-semibold"
-                  disabled={session.availableSeats === 0}
-                >
-                  {session.availableSeats === 0 ? "Нет свободных мест" : "Купить билет"}
-                </Button>
+                <div className="flex gap-4">
+                  <Button
+                    onClick={handleBuyTicket}
+                    className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg font-semibold"
+                    disabled={currentSession.availableSeats === 0}
+                  >
+                    {currentSession.availableSeats === 0 ? "Нет свободных мест" : "Купить билет"}
+                  </Button>
+
+                  {movie.trailer && (
+                    <a 
+                      href={movie.trailer} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                    >
+                      <Button variant="outline">
+                        Смотреть трейлер
+                      </Button>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -190,4 +250,18 @@ export const SessionDetails = () => {
       </div>
     </div>
   )
-} 
+}
+
+const LoadingSpinner = () => (
+  <div className="container mx-auto py-8 px-4 bg-[#141414]">
+    <div className="flex items-center justify-center h-[60vh]">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
+    </div>
+  </div>
+)
+
+const NotFound = ({ message }: { message: string }) => (
+  <div className="container mx-auto py-8 px-4 bg-[#141414]">
+    <div className="text-center text-white">{message}</div>
+  </div>
+) 

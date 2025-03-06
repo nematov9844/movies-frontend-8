@@ -42,5 +42,5 @@ export const getMe = async () => {
   const response = await axios.get(`${API_URL}/auth/me`, {
     headers: { Authorization: `Bearer ${token}` }
   })
-  return response.data
+  return { ...response.data, token }
 } 

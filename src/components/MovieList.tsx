@@ -52,9 +52,9 @@ export function MovieList({ movies }: MovieListProps) {
 
   return (
     <div className="bg-[#1C2127] py-8">
-      <div className="max-w-[1440px] mx-auto">
-        <h2 className="text-2xl font-bold text-white mb-6">Афиша</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="max-w-[1440px] mx-auto px-4">
+        <h2 className="text-2xl sm:text-xl md:text-2xl font-bold text-white mb-6">Афиша</h2>
+        <div className="grid grid-cols-1 nr:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mx-5 md:mx-0">
           {movies.map((movie) => (
             <Card key={movie._id} className="bg-[#2A2F37] pb-4 pt-0 overflow-hidden border-none text-white hover:shadow-emerald-500/20 hover:shadow-lg transition-shadow">
               <div className="aspect-[2/3] relative overflow-hidden group">
@@ -64,21 +64,21 @@ export function MovieList({ movies }: MovieListProps) {
                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-2 right-2">
-                  <Badge className="bg-emerald-500">{movie.rating}/10</Badge>
+                  <Badge className="bg-emerald-500 text-xs sm:text-xs md:text-sm">{movie.rating}/10</Badge>
                 </div>
                 <button
                   onClick={() => handleAddToWishlist(movie._id)}
-                  className="absolute top-2 left-2 p-2 rounded-full bg-black/50 text-white hover:bg-emerald-500 transition-colors"
+                  className="absolute top-2 left-2 p-1 sm:p-2 rounded-full bg-black/50 text-white hover:bg-emerald-500 transition-colors"
                 >
-                  <HeartIcon className="h-5 w-5" />
+                  <HeartIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
               </div>
               
-              <CardHeader>
-                <CardTitle className="text-lg font-bold">{movie.title}</CardTitle>
-                <div className="flex gap-2 flex-wrap mt-2">
+              <CardHeader className="justify-between">
+                <CardTitle className="text-base sm:text-sm md:text-lg font-bold">{movie.title}</CardTitle>
+                <div className="flex gap-1 sm:gap-2 flex-wrap mt-1">
                   {movie.genre.map((genre) => (
-                    <Badge key={genre} variant="outline" className="border-emerald-500 text-emerald-500">
+                    <Badge key={genre} variant="outline" className="border-emerald-500 text-emerald-500 text-xs sm:text-sm">
                       {genre}
                     </Badge>
                   ))}
@@ -86,17 +86,17 @@ export function MovieList({ movies }: MovieListProps) {
               </CardHeader>
 
               <CardContent>
-                <p className="text-gray-400 line-clamp-2 text-sm mb-4">
+                <p className="text-gray-400 line-clamp-2 text-xs sm:text-sm md:text-sm mb-3">
                   {movie.description}
                 </p>
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-col">
-                    <span className="text-sm text-gray-400">Давомийлigi:</span>
-                    <span className="font-medium">{movie.duration} дак.</span>
+                <div className="flex flex-col gap-4 sm:flex-row justify-between items-center">
+                  <div className="flex flex-wrap">
+                    <span className="text-xs sm:text-sm text-gray-400">Давомийлги:</span>
+                    <span className="font-medium text-xs sm:text-sm">{movie.duration} дак.</span>
                   </div>
                   <Button
                     onClick={() => handleBuyTicket(movie._id)}
-                    className="bg-emerald-500 hover:bg-emerald-600"
+                    className="bg-emerald-500 hover:bg-emerald-600 text-xs sm:text-sm"
                   >
                     Купить билет
                   </Button>

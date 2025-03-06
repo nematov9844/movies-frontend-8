@@ -1,147 +1,159 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
-import type { AuthState } from "../hooks/useAuth";
+import { useToast } from "../hooks/useToast";
+import { Badge } from "../components/ui/badge";
+
+interface Ticket {
+  _id: string
+  movie: string
+  seatNumber: string
+  price: number
+  paymentStatus: string
+  purchasedAt: string
+}
+
+interface UserProfile {
+  _id: string
+  name: string
+  email: string
+  isVerified: boolean
+  isAdmin: boolean
+  avatar: string
+  tickets: Ticket[]
+}
 
 const Profile = () => {
-  const auth = useAuth() as unknown as AuthState;
-  const user = auth?.user?.user;
-  const [isEditing, setIsEditing] = useState(false);
-  const token = localStorage.getItem('token');
+  const [profile, setProfile] = useState<UserProfile | null>(null)
+  const [loading, setLoading] = useState(true)
+  const { addToast } = useToast()
+  const { getMe } = useAuth()
   
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    avatar: "",
-  });
-
   useEffect(() => {
-    if (user) {
-      setFormData({
-        name: user.name || "",
-        email: user.email || "",
-        avatar: user.avatar || "",
-      });
+    const fetchProfile = async () => {
+      try {
+        setLoading(true)
+        const response = await getMe()
+        setProfile(response.user)
+      } catch (error) {
+        console.error("Profil ma'lumotlarini yuklashda xatolik:", error)
+        addToast("Profil ma'lumotlarini yuklashda xatolik yuz berdi", "error")
+      } finally {
+        setLoading(false)
+      }
     }
-  }, [user]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    fetchProfile()
+  }, [])
 
-  const handleSubmit = async () => {
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/me`,
-        formData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      
-      auth.setUser({ user: res.data.user });
-      setIsEditing(false);
-    } catch (error: any) {
-      console.error("Profilni yangilashda xatolik:", error.response?.data || error.message);
-    }
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#141414] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
+      </div>
+    )
+  }
+
+  if (!profile) {
+    return (
+      <div className="min-h-screen bg-[#141414] flex items-center justify-center">
+        <div className="text-white">Profil topilmadi</div>
+      </div>
+    )
+  }
 
   return (
-    <div className="container mx-auto py-10 px-4">
-      <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border">
-        <div className="flex flex-col items-center space-y-6">
-          {/* Avatar */}
-          <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-2xl font-semibold overflow-hidden">
-            {formData.avatar ? (
-              <img 
-                src={formData.avatar} 
-                alt="Avatar" 
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              formData.name.charAt(0).toUpperCase() || "U"
-            )}
+    <div className="min-h-screen bg-[#141414]">
+      <div className="container mx-auto py-8 px-4">
+        <div className="bg-[#1C2127] rounded-xl shadow-xl overflow-hidden border border-gray-800">
+          <div className="p-6">
+            {/* Profil ma'lumotlari */}
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="w-full md:w-1/4">
+                <div className="aspect-square rounded-full overflow-hidden bg-gray-800">
+                  {profile.avatar ? (
+                    <img 
+                      src={profile.avatar} 
+                      alt={profile.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-500">
+                      No image
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex-1">
+                <h1 className="text-3xl font-bold text-white mb-4">{profile.name}</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <span className="text-gray-400 text-sm">Email</span>
+                    <p className="text-white">{profile.email}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-400 text-sm">Status</span>
+                    <div className="flex items-center gap-2">
+                      {profile.isVerified ? (
+                        <Badge className="bg-emerald-500">Tasdiqlangan</Badge>
+                      ) : (
+                        <Badge variant="destructive">Tasdiqlanmagan</Badge>
+                      )}
+                      {profile.isAdmin && (
+                        <Badge className="bg-blue-500">Admin</Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Chipta tarixi */}
+            <div className="mt-8">
+              <h2 className="text-2xl font-bold text-white mb-6">Chipta tarixi</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-[#2A2F37] text-gray-400">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-sm">Sana</th>
+                      <th className="px-4 py-3 text-left text-sm">O'rindiq</th>
+                      <th className="px-4 py-3 text-left text-sm">Narxi</th>
+                      <th className="px-4 py-3 text-left text-sm">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-800">
+                    {profile.tickets.map((ticket) => (
+                      <tr key={ticket._id} className="text-gray-300">
+                        <td className="px-4 py-3 text-sm">
+                          {new Date(ticket.purchasedAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-4 py-3 text-sm">{ticket.seatNumber}</td>
+                        <td className="px-4 py-3 text-sm">
+                          {ticket.price.toLocaleString()}0 000 сум
+                        </td>
+                        <td className="px-4 py-3">
+                          <Badge 
+                            className={
+                              ticket.paymentStatus === 'paid' 
+                                ? 'bg-emerald-500' 
+                                : 'bg-yellow-500'
+                            }
+                          >
+                            {ticket.paymentStatus === 'paid' ? 'To\'langan' : 'Kutilmoqda'}
+                          </Badge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-
-          {/* Ism */}
-          {isEditing ? (
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="text-2xl font-bold text-gray-800 border p-2 rounded-md w-full text-center"
-            />
-          ) : (
-            <h1 className="text-2xl font-bold text-gray-800">{user?.name || "Ism yo‘q"}</h1>
-          )}
-
-          {/* Ma'lumotlar bloki */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
-            <div className="p-4 bg-gray-100 rounded-lg">
-              <p className="text-sm text-gray-500">Email</p>
-              {isEditing ? (
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="text-lg font-medium border p-2 rounded-md w-full"
-                />
-              ) : (
-                <p className="text-lg font-medium">{user?.email || "N/A"}</p>
-              )}
-            </div>
-
-            <div className="p-4 bg-gray-100 rounded-lg">
-              <p className="text-sm text-gray-500">Ro‘yxatdan o‘tgan sana</p>
-              <p className="text-lg font-medium">
-                {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}
-              </p>
-            </div>
-          </div>
-
-          {/* Avatar URL kiritish */}
-          {isEditing && (
-            <div className="w-full">
-              <p className="text-sm text-gray-500 mb-1">Avatar URL</p>
-              <input
-                type="text"
-                name="avatar"
-                value={formData.avatar}
-                onChange={handleChange}
-                className="text-lg font-medium border p-2 rounded-md w-full"
-                placeholder="Rasm URL kiritish"
-              />
-            </div>
-          )}
-
-          {/* Tugmalar */}
-          {isEditing ? (
-            <div className="flex gap-4">
-              <button
-                onClick={handleSubmit}
-                className="px-6 py-2 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition"
-              >
-                Saqlash
-              </button>
-              <button
-                onClick={() => setIsEditing(false)}
-                className="px-6 py-2 bg-gray-400 text-white rounded-lg shadow-md hover:bg-gray-500 transition"
-              >
-                Bekor qilish
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
-            >
-              Profilni tahrirlash
-            </button>
-          )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
